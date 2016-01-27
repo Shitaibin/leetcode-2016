@@ -8,7 +8,7 @@ public:
     int lengthOfLongestSubstring(string s) {
         int max_len = 0;
         int len = s.size();
-        map<char, int> cha_index;
+        unordered_map<char, int> cha_index;
         int start_index = 0; // 字符串开始的位置
         for (int i=0; i<len; ++i) {
             // 子串出现重复字符，下一次字符串开始在第一次出现的下一个位置
