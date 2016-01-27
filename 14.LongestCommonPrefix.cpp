@@ -1,21 +1,33 @@
-string prefix(string sa, string sb) {
-    int i;
-    int la = sa.size(), lb = sb.size();
-    for (i=0; i<la && i<lb && sa[i]==sb[i]; ++i);
-    return sa.substr(0, i);
-}
+/**
+ * 按列更快，因为前缀可能很短。
+ */
 
 class Solution {
 public:
     string longestCommonPrefix(vector<string>& strs) {
-        if(strs.empty())
-            return "";
-            
+        if (strs.empty()) return "";
         
-        string longest = strs[0];
-        for (int i=1; i<strs.size(); ++i) {
-            longest = prefix(strs[i], longest);
+        char cur_ch;
+        int cur_pos = 0;
+        
+        while (1) {
+            if (cur_pos < strs[0].size()) {
+                cur_ch = strs[0][cur_pos];
+            } else {
+                break;
+            }
+            
+            bool find = false;
+            for (int i=1; i<strs.size(); ++i) {
+                if (cur_pos >= strs[i].size() || cur_ch != strs[i][cur_pos]) {
+                    find = true;
+                    break;
+                }
+            }
+            
+            if (find) break;
+            else ++cur_pos;
         }
-        return longest;
+        return strs[0].substr(0, cur_pos);
     }
 };
