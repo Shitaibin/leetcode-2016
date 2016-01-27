@@ -1,47 +1,35 @@
-/**
- * 遍历每个元素，找出以此为中心的最长子串，并判断是否是全局最长子串。
- */
 class Solution {
 public:
     string longestPalindrome(string s) {
-        int max_len=1, max_start=0;
-        for (int i=0; i<s.size(); ++i) {
-            // first: i center
-            int j;
-            for (j=1; i-j>=0 && i+j<s.size(); ++j) {
-                if (s[i-j] != s[i+j]) {
-                    //cout << s[i-j] << s[i+j] << endl;
-                    //max_len = max(2*j+1, max_len);
-                    if (2*j-1 > max_len) {
-                        max_len = 2*j-1;
-                        max_start = i-j+1;
-                    }
-                    break;
-                }
-            }
-            if (2*j-1 > max_len) {
-                max_len = 2*j-1;
-                max_start = i-j+1;
-            }
-                    
-            // second: no center
-            int k;
-            for (j=i, k=i+1; j>=0 && k<s.size(); --j, ++k) {
-                if (s[j] != s[k]) {
-                    //max_len = max(k-j+1, max_len);
-                    if (k-j-1 > max_len) {
-                        max_len = k-j-1;
-                        max_start = j+1;
-                    }
-                    break;
-                }
-            }
-            if (k-j-1 > max_len) {
-                max_len = k-j-1;
-                max_start = j+1;
+        if(s.length() == 0)
+            return s;
+        string t = "^";
+        int i, n = s.length();
+        for(i = 0; i < n; i++)
+            t += "#" + s.substr(i, 1);
+        t += "#$";
+        n = t.length();
+        int C = 0, R = 0;
+        int P[n];
+        memset(P, 0,sizeof(P));
+        for(i = 1; i < n - 1; i++) {
+            int i_mirror = C - (i - C);
+            P[i] = R > C ? min(P[i_mirror], R - i) : 0;
+            
+            while(t[i + P[i] + 1] == t[i - P[i] - 1])
+                P[i]++;
+            if(i + P[i] > R) {
+                R = i + P[i];
+                C = i;
             }
         }
-        
-        return s.substr(max_start, max_len);
+        int maxlen = 0, index = 0;
+        for(i = 1; i < n - 1; i++) {
+            if(P[i] > maxlen) {
+                maxlen = P[i];
+                index = i;
+            }
+        }
+        return s.substr((index - 1 - maxlen) / 2, maxlen);
     }
 };
