@@ -7,16 +7,14 @@ public:
         char_map['{'] = '}';
         
         stack<char> pare_stack;
-        int i;
-        for (i=0; i<s.size(); ++i) {
-            if (s[i] == '(' || s[i] == '[' || s[i] == '{')
-                pare_stack.push(s[i]);
+        for (char c:s) {
+            if (c == '(' || c == '[' || c == '{')
+                pare_stack.push(c);
             else {
-                if (pare_stack.empty() || char_map[pare_stack.top()] != s[i]) {
+                if (pare_stack.empty() || char_map[pare_stack.top()] != c)
                     return false;
-                } else {
+                else
                     pare_stack.pop();
-                }
             }
         }
         return pare_stack.empty();
