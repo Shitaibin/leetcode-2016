@@ -1,11 +1,17 @@
+/**
+ * 减少不必要的移动
+ */
+
 class Solution {
 public:
     int removeElement(vector<int>& nums, int val) {
-        int i = 0, j;
-        for (i = 0, j = 0; j < nums.size(); ++j) {
-            if (nums[j] != val)
-                nums[i++] = nums[j];
+        int i, j;
+        i = 0, j = nums.size() - 1;
+        while (i<=j) {
+            while (j >= i && nums[j] == val) --j;
+            while (i <= j && nums[i] != val) ++i;
+            if (i < j) nums[i++] = nums[j--]; //i<j时，一定不存在越界
         }
-        return i;
+        return j+1;
     }
 };
