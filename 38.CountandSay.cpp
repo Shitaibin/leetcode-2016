@@ -1,25 +1,24 @@
+/**
+ * 不使用to_string快了很多。
+ */
 class Solution {
 public:
     string countAndSay(int n) {
-        string m = "1";
+        string s = "1", next;
+        int cnt, i;
         while (--n) {
-            m = getNext(m);
-        }
-        return m;
-    }
-
-private:
-    string getNext(string s) {
-        string ret = "";
-        int cnt = 1, i;
-        for (i = 1; i < s.size(); ++i) {
-            if (s[i] == s[i-1]) cnt++;
-            else {
-                ret += to_string(cnt) + s[i-1];
-                cnt = 1;
+            cnt = 1;
+            next = "";
+            for (i = 1; i < s.size(); ++i) {
+                if (s[i] == s[i-1]) cnt++;
+                else {
+                    next += cnt + '0' + s[i-1]; //bug: 因为next后面加的都是char型，多个char型相加等同于，int相加
+                    cnt = 1;
+                }
             }
+            next += cnt + '0' + s[i-1]; //bug: 因为next后面加的都是char型，多个char型相加等同于，int相加
+            s = next;
         }
-        ret += to_string(cnt) + s[i-1];
-        return ret;
+        return s;
     }
 };
