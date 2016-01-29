@@ -20,3 +20,22 @@ public:
         return -1;
     }
 };
+
+
+/**
+ * 不使用string函数。
+ */
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        if (needle.empty()) return 0;
+        
+        int nl = needle.size();
+        int hl = haystack.size();
+        for (int i=0, j; i<=hl-nl; i++) { 
+            for (j=0; j<nl && haystack[i+j] == needle[j]; ++j);
+            if (j == nl) return i;
+        }
+        return -1;
+    }
+};
