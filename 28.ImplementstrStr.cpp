@@ -1,9 +1,8 @@
 /**
- * haystack为空, needle不空。
- * 
  * 特殊情况：
  * 1. needle空，空是任何串的子串，返回0；
  * 2. needle只含空白符，空白符也是字符，不单独处理。
+ * 3. needle长度小。
  */
 class Solution {
 public:
@@ -12,7 +11,9 @@ public:
         
         int nl = needle.size();
         int r = haystack.size()-nl;
-        for (int i=0; i<=(r); i++) { //把r替换掉，运行时错误
+        // 把r替换掉，运行时错误：size()返回的为unsinged，当needle短时，
+        // 小unsigned减大unsigned得到是更大的正数
+        for (int i=0; i<=r; i++) { 
             if (haystack[i] == needle[0] && haystack.substr(i, nl) == needle)
                 return i;
         }
