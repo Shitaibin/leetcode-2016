@@ -38,4 +38,4 @@ public:
     bool empty(void) {
         return s1.empty();
     }
-};
+}
