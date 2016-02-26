@@ -1,6 +1,7 @@
 // Forward declaration of isBadVersion API.
 bool isBadVersion(int version);
 
+// 二分搜索变形
 class Solution {
 public:
     int firstBadVersion(int n) {
