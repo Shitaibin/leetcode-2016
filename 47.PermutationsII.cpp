@@ -40,3 +40,37 @@ public:
         return result;
     }
 };
+
+// v2: faster
+class Solution {
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<vector<int> > result;
+        result.push_back(nums);
+    
+        if (nums.size() <2){
+            return result;
+        }
+            
+        int pos=0;
+        while(pos<nums.size()-1){
+            int size = result.size();
+            for(int i=0; i<size; i++){
+                //sort the array, so that the same numsber will be together
+                sort(result[i].begin()+pos, result[i].end());
+                //take each numsber to the first
+                for (int j=pos+1; j<result[i].size(); j++) {
+                    vector<int> v = result[i]; // put this out of for loop will make TLE! Why?
+                    //skip the same numsber 
+                    if (j>0 && v[j]==v[j-1]){
+                        continue;
+                    }
+                    swap(v[j], v[pos]);
+                    result.push_back(v);
+                }
+            }
+            pos++;
+        }
+        return result;
+    }
+};
