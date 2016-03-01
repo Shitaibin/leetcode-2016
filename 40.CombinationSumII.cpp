@@ -1,7 +1,7 @@
 // 两种状态：包含当前元素，不包含当前元素
 class Solution {
 private:
-    void combinationSumHelper(vector<int> &candidates, int start, int target, vector<int> &solution, vector<vector<int>> &result) {
+    void combinationSum2Helper(vector<int> &candidates, int start, int target, vector<int> &solution, vector<vector<int>> &result) {
         if (target < 0) {
             return ;
         }
@@ -15,13 +15,13 @@ private:
                 continue;
             }
             solution.push_back(candidates[i]); //包含当前当前元素的结果
-            combinationSumHelper(candidates, i, target-candidates[i], solution, result); //当前数值可以重复多次，所以仍从i开始
+            combinationSum2Helper(candidates, i+1, target-candidates[i], solution, result); //每个元素只使用1次
             solution.pop_back(); //不包含当前元素的结果
         }
     }
 
 public:
-    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
         vector<vector<int>> result;
         if (candidates.empty()) {
             return result;
@@ -30,6 +30,7 @@ public:
         sort(candidates.begin(), candidates.end());
 
         vector<int> solution;
-        combinationSumHelper(candidates, 0, target, solution, result);
+        combinationSum2Helper(candidates, 0, target, solution, result);
+        return result;
     }
 };
