@@ -4,7 +4,7 @@ private:
         int n = ch-'0';
         string s;
         int carry = 0;
-        for (int i = num.size()-1; i >= 0; i--) {
+        for (int i = num.size()-1; i >= 0; i--) { // forget-1
             int x = (num[i]-'0') * n + carry;
             s.insert(s.begin(), x%10+'0');
             carry = x/10;
