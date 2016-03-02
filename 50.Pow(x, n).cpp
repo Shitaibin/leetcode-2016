@@ -31,7 +31,7 @@ public:
         bool sign = false;
         unsigned int exp = n;
         if(n<0){
-            exp = -n;
+            exp = -n; // 不越界
             sign = true;
         }
         double result = 1.0;
