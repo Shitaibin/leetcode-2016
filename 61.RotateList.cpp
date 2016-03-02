@@ -10,6 +10,7 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+ // v1: mine
 class Solution {
 public:
     ListNode* rotateRight(ListNode* head, int k) {
@@ -35,6 +36,36 @@ public:
             p = p->next;
         }
         pk->next = head;
+        head = p->next;
+        p->next = NULL;
+        
+        return head;
+    }
+};
+
+// v2: using only one pointer
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        if (head == NULL || k<=0)
+            return head;
+        
+        // find the length of List
+        int len = 1;
+        ListNode* p = NULL;
+        for (p = head; p->next; p = p->next) {
+            len++;
+        }
+        p->next = head; // connect tail to head
+        
+    
+        // k <= len, find the place
+        k = len - (k % len);
+        while (k--) {
+            p = p->next;
+        }
+        
+        // break list
         head = p->next;
         p->next = NULL;
         
