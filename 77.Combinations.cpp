@@ -1,4 +1,4 @@
-
+// trick
 // v2: iterative
 // https://github.com/haoel/leetcode/blob/master/algorithms/cpp/combinations/combinations.cpp#L77
 class Solution {
