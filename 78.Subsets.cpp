@@ -71,14 +71,14 @@ private:
             // step 1), find [1,0] pattern
             bool found = false;
             int ones = 0;
-            for (int i = 0; i<n-1; i++) {
+            for (int i = 0; i<n-1; i++) { // n-1写成n-k
                 if (d[i]==1 && d[i+1]==0) {
                     d[i] = 0;
                     d[i+1] = 1;
                     found = true;
                     // step 2) move all of right 1 before i to the most left side
                     for (int j = 0; j<i; j++) {
-                        d[j] = (ones > 0) ? 1 : 0;
+                        d[j] = (ones > 0) ? 1 : 0; // j写成i
                         ones--;
                     }
                     break; // go to next solution
