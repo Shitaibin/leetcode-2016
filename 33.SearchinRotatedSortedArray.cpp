@@ -1,3 +1,13 @@
+// https://github.com/haoel/leetcode/blob/master/algorithms/cpp/searchInRotatedSortedArray/searchInRotatedSortedArray.cpp
+
+/*
+ *    Using binary search idea, 
+ *    1) Spliting the array to two part, one part should be non-rotated, another one is rotated.
+ *    2) Checking the "key" whether is possible in non-rotated sorted part.
+ *        2.1) if it is, then go to the classcial binary searh.
+ *        2.2) if it not, then keep spliting the rorated part.
+ *
+ */
 class Solution {
 public:
     int search(vector<int>& nums, int target) {
