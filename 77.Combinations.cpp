@@ -5,7 +5,7 @@ class Solution {
 public:
     vector<vector<int>> combine(int n, int k) {
         vector<vector<int>> result;
-        vector<int> d;
+        vector<int> d; //map
         
         // initial solution
         for (int i = 0; i < n; i++) {
