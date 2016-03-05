@@ -26,12 +26,12 @@ public:
             if (nums[mid] == target) return mid;
             
             // target in non-rorated array: left
-            if (nums[l] < nums[mid] && target >= nums[l] && target <= nums[mid]) {
+            if (nums[l] < nums[mid] && target >= nums[l] && target < nums[mid]) {
                 h = mid-1;
                 continue;
             }
             // target in non-rotated array: right
-            if (nums[mid] < nums[h] && target >= nums[mid] && target <= nums[h]) {
+            if (nums[mid] < nums[h] && target > nums[mid] && target <= nums[h]) {
                 l = mid + 1;
                 continue;
             }
