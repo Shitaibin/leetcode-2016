@@ -1,6 +1,7 @@
 // trick
 // v2: iterative
 // https://github.com/haoel/leetcode/blob/master/algorithms/cpp/combinations/combinations.cpp#L77
+// 不适合用在重复元素中，因此90题，不使用此方案，使用最原始的回溯
 class Solution {
 public:
     vector<vector<int>> combine(int n, int k) {
