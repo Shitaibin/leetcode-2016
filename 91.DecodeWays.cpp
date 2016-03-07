@@ -14,14 +14,15 @@ private:
     
 public:
     int numDecodings(string s) {
-        if (s.size() <= 0) return 0;
-        if (s.size() == 1) return check(s[0]);
+        int n = s.size();
+        if (n <= 0) return 0;
+        if (n == 1) return check(s[0]);
         
-        vector<int> dp(s.size(), 0);
+        vector<int> dp(n, 0);
         
         dp[0] = check(s[0]);
         dp[1] = check(s[0]) * check(s[1]) + check(s[0], s[1]);  // special
-        for (int i = 2; i < s.size(); i++) {
+        for (int i = 2; i < n; i++) {
             if (!isdigit(s[i])) break;
             if (check(s[i])) {
                 dp[i] = dp[i-1];
@@ -30,7 +31,7 @@ public:
                 dp[i] += dp[i-2];
             }
         }
-        int result = dp[s.size()-1];
+        int result = dp[n-1];
         return result;
     }
 };
