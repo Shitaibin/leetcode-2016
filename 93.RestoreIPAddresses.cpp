@@ -1,40 +1,39 @@
 // v2: 快速
 class Solution {
-void restoreIpAddressesHelper(string& s, int start, int partNum, string ip, vector<string>& result) {
-
-    // too little or too much characters
-    int len = s.size();
-    if ( len - start < 4-partNum  || len - start > (4-partNum)*3 ) {
-        return;
-    }
-
-    // reach the end and get 4 parts
-    if (partNum == 4 && start == len){
-        ip.erase(ip.end()-1, ip.end()); // remove the last dot
-        result.push_back(ip);
-        return;
-    }
-
-    // backtracking
-    int num = 0;
-    for (int i=start; i<start+3; i++){
-        num = num*10 + s[i]-'0'; // get current num
-        if (num<256){
-            // invalid part
-            ip+=s[i];
-            restoreIpAddressesHelper(s, i+1, partNum+1, ip+'.', result);
-        }         
+private:
+    void restoreIpAddressesHelper(string &s, int start, int part_count, string ip, vector<string>& result) {
+        int n = s.size();
+        // too little or too much
+        if (n-start < 4-part_count || n-start > (4-part_count)*3) {
+            return;
+        }
         
-        //0.0.0.0 valid, but 0.1.010.01 is not
-        // 如果放到上一个if前面，所有以0为首，包括0自己，都不是合理的IP
-        if (num == 0) {
-            // case："0x"
-            break;
+        // reach the end and get 4 parts
+        if (start == n && part_count == 4) {
+            // 3 ways remove the last dot
+            // ip.erase(ip.end()-1, ip.end());
+            ip.erase(ip.end()-1);
+            // ip.pop_bacK(); // some complier may not support 
+            result.push_back(ip);
+            return;
+        }
+        
+        // backtracking
+        int num = 0;
+        for (int i = start; i < start+3; i++) {
+            num = num * 10 + s[i]-'0';
+            if (num < 256) {
+                ip += s[i];
+                restoreIpAddressesHelper(s, i+1, part_count+1, ip+'.', result);
+            }
+            
+            // 0.0.0.0 is valid but 0.01.011.0 is invalid
+            if (num == 0) {
+                break;
+            }
         }
     }
-       
-}
-
+    
 public:
     vector<string> restoreIpAddresses(string s) {
         vector<string> result;
