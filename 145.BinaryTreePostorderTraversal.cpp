@@ -10,29 +10,26 @@
 class Solution {
 public:
     vector<int> postorderTraversal(TreeNode* root) {
-        vector<int> v;
+        vector<int> result;
         
         TreeNode *pre = NULL, *cur = root;
-        
         stack<TreeNode*> s;
         while (cur || s.size()) {
             while (cur) {
                 s.push(cur);
                 cur = cur->left;
             }
+            
             cur = s.top();
             if (cur->right && pre != cur->right) {
-                // if right has been visited
-                // pre must be the right child
                 cur = cur->right;
             } else {
-                v.push_back(cur->val);
+                result.push_back(cur->val);
                 pre = cur;
                 s.pop();
                 cur = NULL;
             }
         }
-        
-        return v;
+        return result;
     }
 };
