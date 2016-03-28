@@ -6,6 +6,14 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+
+
+// v2: optimized, 64ms
+
+ 
+
+
+// v1: 68ms
 class Solution {
 public:
     void reorderList(ListNode* head) {

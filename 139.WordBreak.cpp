@@ -1,3 +1,23 @@
+// v4: check from i to 0
+class Solution {
+public:
+    bool wordBreak(string s, unordered_set<string>& wordDict) {
+        int n = s.size();
+        vector<bool> dp(n+1, false);
+        dp[0] = true;
+        for (int i = 0; i < n+1; i++) {
+            for (int j = i; j >= 0 && dp[i] == false; j--) {
+                if (dp[j] && wordDict.find(s.substr(j, i-j)) != wordDict.end()) {
+                    dp[i] = true;
+                    // break;
+                }
+            }            
+        }
+        
+        return dp[n];
+    }
+};
+
 // v3: AC.
 // dp[i] = {(wordDict(s[:i])) || 
 //         (dp[0] && wordDict(s[1:i])) || 
@@ -16,13 +36,10 @@ public:
             
             if (dp[i]) continue;
             
-            for (int j = 0; j < i; j++) {
+            for (int j = 0; j < i && !dp[i]; j++) {
                 if (dp[j]) {
                     w = s.substr(j+1, i-j);
                     dp[i] = wordDict.find(w) != wordDict.end();
-                    if (dp[i]) {
-                        break;
-                    }
                 }
             }
             
