@@ -15,7 +15,7 @@ public:
         utype n = numerator;
         utype d = denominator;
         
-        // deal with negative cases
+        // deal with negative cases // forgot at the begining
         bool sign = ((float)n/d >= 0);
         if (n < 0) {n = -n;}
         if (d < 0) {d = -d;}
