@@ -1,0 +1,23 @@
+
+
+
+// 每个灯最后的状态，和它有几个除1外的因子有关系，
+// 如果是奇数，说明最后是亮的。
+// 但是求每个灯的因子很耗费时间O(N)，
+// 算法总时间复杂度为O(N^2)。
+// 奇偶数是交替存在的，演变为异或运算。
+class Solution {
+public:
+    int bulbSwitch(int n) {
+        int total = 0;
+        for (int i = 1; i <= n; i++) {
+            int open = 1;
+            for (int j = 2; j <= i; j++) {
+                if (i % j == 0)
+                    open ^= 1;
+            }
+            total += open;
+        }
+        return total;
+    }
+};
