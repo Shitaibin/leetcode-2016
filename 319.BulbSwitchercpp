@@ -1,4 +1,10 @@
-
+// 多写几个，你就会发现，最后亮着的是1,4,9...
+class Solution {
+public:
+    int bulbSwitch(int n) {
+        return sqrt(n);
+    }
+};
 
 
 // 每个灯最后的状态，和它有几个除1外的因子有关系，
