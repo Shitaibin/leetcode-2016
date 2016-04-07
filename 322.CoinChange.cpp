@@ -24,7 +24,7 @@ int coin_change(vector<int> a, int amount) {
     dp[0] = 0;
     for (int i = 1; i <= amount; i++) {
         for (int j = 0; j < a.size(); j++) {
-            if (i >= a[j]) {
+            if (i >= a[j]) { // 每次都需要确保边界是安全的
                 dp[i] = min(dp[i], dp[i-a[j]] + 1);
             }
         }
