@@ -46,9 +46,9 @@ public:
         for (int pos = 0; pos < nums.size()-1; pos++) {
             int result_size = result.size();
             for (int i = 0; i < result_size; i++) {
-                vector<int> v = result[i];
                 //take each number to the first place
-                for (int j = pos+1; j < v.size(); j++) {
+                for (int j = pos+1; j < result[i].size(); j++) {
+                    vector<int> v = result[i]; // do not take it out, each we should make a new copy
                     swap(v[j], v[pos]);
                     result.push_back(v);
                 }
