@@ -42,6 +42,7 @@ public:
             return result;
         }
         
+        // pos is the 'first place' each time
         for (int pos = 0; pos < nums.size()-1; pos++) {
             int result_size = result.size();
             for (int i = 0; i < result_size; i++) {
