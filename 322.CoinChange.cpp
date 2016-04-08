@@ -29,7 +29,7 @@ int coin_change(vector<int> a, int amount) {
             }
         }
     }
-    return dp[amount] != MAX ? dp[amount] : -1;
+    return dp[amount] != MAX ? dp[amount] : -1; // 不存在的时候返回-1
 }
 
 
