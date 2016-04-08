@@ -1,8 +1,9 @@
 // 公司：未知
 
-// v1: 不快。
+// v2: 快。增加了cache。
 // 思路：根据每个操作符分成两半，然后分别计算两半的值，
 // 将计算得来的结果，插入到最终结果中。
+
 
 class Solution {
     vector<int> calc(vector<int>& a_ret, vector<int>& b_ret, const char& op) {
@@ -30,14 +31,13 @@ class Solution {
         return result;
     }
     
-    int atoi(const string& s) {
-        istringstream iss(s);
-        int x;
-        iss >> x;
-        return x;
-    }
-    
     vector<int> split_get_value(const string& s) {
+        // accelerate
+        static map<string, vector<int>> cache;
+        if (cache.find(s) != cache.end()) {
+            return cache[s];
+        }
+        
         vector<int> result;
         if (s.empty()) {
             // s is empty, it means there is a negative number
@@ -57,11 +57,13 @@ class Solution {
             }
             if (result.empty()) {
                 // no operator, s is a number
-                result.push_back(atoi(s));
+                result.push_back(atoi(s.c_str())); // 使用atoi，参数使用字符数组
             }
         }
         
-        //sort(result.begin(), result.end());
+        // update cache
+        cache.insert(make_pair(s, result));
+        
         return result;
     }
     
