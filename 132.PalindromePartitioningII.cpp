@@ -20,7 +20,7 @@ public:
         for (int i = 1; i <= n; i++) {
             for (int j = i; j >= 1; j--) {
                 if ( s[i] == s[j] && (i-j<2 || palin_map[j+1][i-1]) ) {
-                    palin_map[j][i] = true;
+                    palin_map[j][i] = true; // type error: switch j and i
                 } else {
                     palin_map[j][i] = false;
                 }
@@ -35,6 +35,7 @@ public:
             // 每次开始访问前，初始化
             // 求最小值，就初始化一个比较大的数，
             // 求最大值，就初始化为一个比较小的数
+            // 忘记2次
             dp[i] = INF; 
             for (int j = 0; j < i; j++) {
                 if (palin_map[j+1][i]) {
