@@ -1,3 +1,6 @@
+// 使用全局变量可以加快速度，但如果定义的空间不够，会出现运行错误。
+
+
 #include <iostream>
 #include <vector>
 #include <cassert>
