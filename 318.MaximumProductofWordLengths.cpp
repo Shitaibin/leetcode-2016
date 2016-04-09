@@ -31,6 +31,7 @@ public:
         int max_prod = 0;
         for (int i = 0; i < n; i++) {
             for (int j = i+1; j < n; j++) {
+                // bug, 逻辑与的运算符优先级比较低，需要加括号
                 if ( (word_bits[i] & word_bits[j]) == 0 ) {
                     max_prod = max(max_prod, word_size[i] * word_size[j]);
                 }
