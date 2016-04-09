@@ -30,7 +30,6 @@ public:
         // dp for cut
         // vector<int> dp(n+1, (1<<30));
         dp[0] = -1;
-        dp[1] = 0;
         for (int i = 1; i <= n; i++) {
             // 每次开始访问前，初始化
             // 求最小值，就初始化一个比较大的数，
