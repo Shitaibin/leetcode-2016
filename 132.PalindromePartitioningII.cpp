@@ -1,9 +1,9 @@
 // v2: 更容易理解
 class Solution {
     static const size_t bufsize = 2000;
+    const int INF = (1<<30);
     bool palin_map[bufsize][bufsize];
     int dp[bufsize];
-    const int INF = 1<<30;
     
 public:
     int minCut(string s) {
