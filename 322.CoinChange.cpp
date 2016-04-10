@@ -1,4 +1,5 @@
 // 使用全局变量可以加快速度，但如果定义的空间不够，会出现运行错误。
+// Clear version in at the end of this file.
 
 
 #include <iostream>
@@ -66,3 +67,25 @@ int main()
     
     return 0;
 }
+
+
+// more clear version
+class Solution {
+    static const int bufsize = 10000;
+    static const int INF = (1<<30);
+    int dp[bufsize];
+    
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        dp[0] = 0;
+        for (int i = 1; i <= amount; i++) {
+            dp[i] = INF;
+            for (int j = 0; j < coins.size(); j++) {
+                if (i >= coins[j]) {
+                    dp[i] = min(dp[i], dp[i-coins[j]] + 1);
+                }
+            }
+        }
+        return dp[amount] == INF ? -1 : dp[amount];
+    }
+};
