@@ -2,12 +2,9 @@
 
 // v2: 由v1升级而来，时间从20ms降到4ms。
 class Solution {
-    int min(int a, int b) {
-        return (a < b ? a : b);
-    }
-    
     int min(int a, int b, int c) {
-        return min( min(a,b), c );
+        // call `min` in std, or compiler will think Solution has a `min(int, int)`
+        return ::min( ::min(a,b), c );
     }
     
 public:
@@ -35,12 +32,9 @@ public:
 
 // v1: 
 class Solution {
-    int min(int a, int b) {
-        return (a < b ? a : b);
-    }
-    
     int min(int a, int b, int c) {
-        return min( min(a,b), c );
+        // call `min` in std, or compiler will think Solution has a `min(int, int)`
+        return ::min( ::min(a,b), c );
     }
     
 public:
