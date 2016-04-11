@@ -10,6 +10,8 @@
 // 保留了之前的数据，如果出现大于mid的值，就得到了一个
 // 递增三元组。
 
+// 其实这也是DP加贪心的问题。
+
 class Solution {
 public:
     bool increasingTriplet(vector<int>& nums) {
