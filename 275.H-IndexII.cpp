@@ -15,7 +15,7 @@
 // 既然f是单调的，我们就可以使用二分查找，但是生成f，需要O(N)。
 // 二分查找时，我们只需要知道大小关系即可，没有必要知道具体
 // 的值，所以我们边比较边移动即可，时间复杂度为O(logN)。
-// 如果找到，结果为(n-beg)，否则（全为负的情况），为0。
+// 结果为(n-beg)。
 
 /*
 测试数据
@@ -35,11 +35,10 @@ public:
     int hIndex(vector<int>& citations) {
         vector<int>& c = citations;
         const int n = c.size();
-        if (n == 0) return 0;
         
         int h_index = 0;
         int beg = 0, end = n-1;
-        while (beg < end) {
+        while (beg <= end) {
             int mid = beg + (end - beg) / 2;
             if (c[mid] < (n-mid)) {
                 beg = mid + 1;
@@ -48,10 +47,10 @@ public:
                 return (n-mid);
             }
             else {
-                end = mid;
+                end = mid - 1;
             }
         }
-        return ( (c[beg] >= (n - beg)) ? (n-beg) : 0 );
+        return n-beg;
     }
 };
 
