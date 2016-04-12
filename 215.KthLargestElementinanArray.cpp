@@ -63,10 +63,10 @@ public:
 class Solution {
 public:
     int findKthLargest(vector<int>& nums, int k) {
-        // 默认构造一个max heap
+        // 把nums转化为符合max heap约束的vector
         // 指定第3个参数为，less<int>()可构造min heap
         make_heap(nums.begin(), nums.end());
-        for (int i = 0; i < k-1; i++) {
+        while (--k) {
             pop_heap(nums.begin(), nums.end());
             nums.pop_back();
         }
