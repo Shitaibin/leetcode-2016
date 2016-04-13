@@ -35,22 +35,20 @@ public:
     int hIndex(vector<int>& citations) {
         vector<int>& c = citations;
         const int n = c.size();
-        
-        int h_index = 0;
         int beg = 0, end = n-1;
         while (beg <= end) {
             int mid = beg + (end - beg) / 2;
-            if (c[mid] < (n-mid)) {
-                beg = mid + 1;
+            if (c[mid] == (n - mid)) {
+                return (n - mid);
             }
-            else if (c[mid] == (n-mid)) {
-                return (n-mid);
+            else if (c[mid] < (n - mid)) {
+                beg = mid + 1;
             }
             else {
                 end = mid - 1;
             }
         }
-        return n-beg;
+        return (n - beg);
     }
 };
 
