@@ -3,6 +3,16 @@
 // 
 // 本题的思想就是替换或利用树的性质（空节点的数量=叶节点的数量+1）。
 // 
+// v1: 4ms
+// v2: -
+// v3: 12 ms
+// v4: 12 ms
+// 
+// 
+// v4思路
+// 本质上来讲，我们只是在统计，用不到stack，所以将v3中stack
+// 换成统计，得到v4。
+//
 // 
 // v3思路
 // 空节点的数量=叶节点的数量+1
@@ -38,36 +48,7 @@
 // 因此复杂度为O(N^2)。提交结果4ms，效率中等。
 // 
 
-// v3: O(N)?
-class Solution {
-    vector<string> split(const string& str) {
-        vector<string> result;
-        stringstream ss(str);
-        string buf;
-        while (getline(ss, buf, ',')) {
-            result.push_back(buf);
-        }
-        return result;
-    }
-    
-public:
-    bool isValidSerialization(string preorder) {
-        vector<string> strs = split(preorder);
-        stack<string> sta;
-        for (int i = 0; i < strs.size(); i++) {
-            if (strs[i] == "#") {
-                if (sta.empty()) {
-                    return i == (strs.size() - 1);
-                }
-                sta.pop();
-            }
-            else {
-                sta.push(strs[i]);
-            }
-        }
-        return false;
-    }
-};
+
 
 
 // v1: O(N^2)，4ms。动手在纸上画出来的结果。
@@ -122,3 +103,70 @@ int main()
     test("9,3,4,#,#,1,#,#,#,2,#,6,#,#", false);
     return 0;
 }
+
+
+
+
+
+// v4: without stack
+class Solution {
+    vector<string> split(const string& str) {
+        vector<string> result;
+        stringstream ss(str);
+        string buf;
+        while (getline(ss, buf, ',')) {
+            result.push_back(buf);
+        }
+        return result;
+    }
+    
+public:
+    bool isValidSerialization(string preorder) {
+        vector<string> strs = split(preorder);
+        int count = 0;  /* the number of non-null nodes */
+        for (int i = 0; i < strs.size(); i++) {
+            if (strs[i] == "#") {
+                if (count == 0) {
+                    return i == (strs.size() - 1);
+                }
+                count--;
+            }
+            else {
+                count++;
+            }
+        }
+        return false;
+    }
+};
+
+
+// v3: slow for using stringstream
+class Solution {
+    vector<string> split(const string& str) {
+        vector<string> result;
+        stringstream ss(str);
+        string buf;
+        while (getline(ss, buf, ',')) {
+            result.push_back(buf);
+        }
+        return result;
+    }
+    
+public:
+    bool isValidSerialization(string preorder) {
+        vector<string> strs = split(preorder);
+        stack<string> sta;
+        for (int i = 0; i < strs.size(); i++) {
+            if (strs[i] == "#") {
+                if (sta.empty()) {
+                    return i == (strs.size() - 1);
+                }
+                sta.pop();
+            }
+            else {
+                sta.push(strs[i]);
+            }
+        }
+        return false;
+    }
+};
