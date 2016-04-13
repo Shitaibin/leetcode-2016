@@ -23,6 +23,7 @@ public:
         
         for (int i=dp.size(); i<=n; i++ ) {
             int m = n;
+            /* j start from 1 */
             for (int j=1; i-j*j >= 0; j++) {
                 m = min (m, dp[i-j*j] + 1);
             }
