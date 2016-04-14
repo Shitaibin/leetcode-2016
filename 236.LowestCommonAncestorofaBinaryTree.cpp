@@ -10,6 +10,7 @@
 
 
 // v2: O(N)。
+/* 潜在bug：必须保证p,q都在树中 */
 class Solution {
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
