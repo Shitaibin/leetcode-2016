@@ -64,7 +64,8 @@ public:
                     int j = i-4-1;
                     while (j > 0 && s[j] != ',') j--; /* 寻找pattern开始的位置 */
                     s.replace(j+1, i-j, "#"); /* s[j+1, i] 替换为 # */
-                    break;  /* start a trun search from the end */
+                    /* we can keep move forward */
+                    // break;  /* start a trun search from the end */
                 }
             }
             if (!find_pattern) break;
