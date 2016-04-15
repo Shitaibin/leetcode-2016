@@ -123,21 +123,12 @@ class Solution {
     
     int partition(vector<int>& nums, int beg, int end) {
         if (beg == end) return beg;
-        if (beg == end-1) {
-            if (nums[beg] > nums[end])
-                swap(nums[beg], nums[end]);
-            return beg;
-        }
-        
         move_median_to_begin(nums, beg, end);
-        
-        int pivot = nums[beg];
-        int i = beg + 1;
         int part = beg;
-        while (i <= end) {
-            if (nums[i] < pivot)
-                swap(nums[++part], nums[i]);
-            i++;
+        int pivot = nums[beg];
+        for (int i = beg + 1; i <= end; i++) {
+            if (nums[i] < pivot) 
+                swap(nums[i], nums[++part]);
         }
         swap(nums[beg], nums[part]);
         return part;
