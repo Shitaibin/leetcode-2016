@@ -4,10 +4,18 @@
 /* 如果DP写起来很复杂，你肯定想错了，用相反的角度思考一下，也许才是对的。*/
 
 /**
+ * dp[i][j]: 以matrix[i][j]为右下角的最大正方形的边长。
+ * 依赖于左，左上，上三个结果中的最小值。
+ * 
+ * 刚开始的思路是：dp[i][j]: 以matrix[i][j]为左上角的最大正方形的边长。
+ * 这样它依赖于左，左上，上三个结果，但还需要另外的探测，所以这种DP思路是
+ * 错误的。
+ * 
  * 更多讨论：
  * https://leetcode.com/discuss/38489/easy-solution-with-detailed-explanations-8ms-time-and-space
  * 列出了如何使用1维数组解决的方案，去手动模拟吧
  */
+
 
 // v1: O(m*n)
 class Solution {
