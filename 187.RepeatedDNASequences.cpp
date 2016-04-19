@@ -47,7 +47,9 @@ public:
         int mask = (1 << 20) - 1;
         for (int i = 10; i < n; i++) {
             /* 计算以s[i]为结尾的子串的hash值 */
-            val = ((val << 2) & mask) | char2val(s[i]);
+            // val = ((val << 2) & mask) | char2val(s[i]);
+            /* better to understand */
+            val = ((val << 2) | char2val(s[i])) & mask;
             if (s2[val])
                 continue;
             if (s1[val]) {
