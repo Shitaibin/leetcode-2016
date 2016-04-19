@@ -21,7 +21,9 @@ public:
     
 public:
     // Initialize your data structure here.
-    TrieNode() : isWord(false), children({0}) {}
+    /* remove a warning for children: */
+    /* warning: list-initializer for non-class type must not be parenthesized */
+    TrieNode() : isWord(false), children{0} {}
 };
 
 class Trie {
