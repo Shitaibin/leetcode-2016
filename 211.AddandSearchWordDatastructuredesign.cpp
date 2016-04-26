@@ -1,0 +1,128 @@
+// v2: 80ms,使用数组构建tree。
+class DictNode {
+public:
+    bool isWord;
+    DictNode* children[26];
+    
+    // 忘记构造函数造成运行时错误
+    DictNode() : isWord(false), children({0}) {}
+};
+
+class WordDictionary {
+public:
+    DictNode* root;
+    
+    WordDictionary() {
+        root = new DictNode();
+    }
+    
+    // Adds a word into the data structure.
+    void addWord(string word) {
+        DictNode* node = root;
+        for (int i = 0; i < word.size(); i++) {
+            int child_idx = word[i] - 'a';
+            if (node->children[child_idx] == NULL)
+                node->children[child_idx] = new DictNode();
+            node = node->children[child_idx];
+        }
+        node->isWord = true;
+    }
+
+    // Returns if the word is in the data structure. A word could
+    // contain the dot character '.' to represent any one letter.
+    bool search(string word) {
+        if (word.empty()) return false;
+        return reg_search(word, 0, root);
+    }
+    
+    bool reg_search(string& word, int idx, DictNode* node) {
+        // all is match, the last thing is whether current node
+        // is a word or not
+        if (idx >= word.size()) return node->isWord;
+        
+        if (word[idx] == '.') {
+            // match each valid child
+            for (int i = 0; i < 26; i++) {
+                if (node->children[i] && reg_search(word, idx+1, node->children[i]))
+                    return true;
+            }
+            return false;
+        }
+        
+        int child_idx = word[idx] - 'a';
+        return (node->children[child_idx] && 
+            reg_search(word, idx+1, node->children[child_idx]));
+    }
+};
+
+// Your WordDictionary object will be instantiated and called as such:
+// WordDictionary wordDictionary;
+// wordDictionary.addWord("word");
+// wordDictionary.search("pattern");
+
+
+// v1: 216ms，slow. using map build tree
+class DictNode {
+public:
+    bool isWord;
+    unordered_map<char, DictNode*> children;
+};
+
+class WordDictionary {
+    
+    
+public:
+    DictNode* root;
+    
+    WordDictionary() {
+        root = new DictNode();
+    }
+    
+    // Adds a word into the data structure.
+    void addWord(string word) {
+        DictNode* node = root;
+        for (int i = 0; i < word.size(); i++) {
+            if (node->children.find(word[i]) == node->children.end())
+                node->children.insert(make_pair(word[i], new DictNode()));
+            node = node->children[word[i]];
+        }
+        node->isWord = true;
+    }
+
+    // Returns if the word is in the data structure. A word could
+    // contain the dot character '.' to represent any one letter.
+    bool search(string word) {
+        if (word.empty()) return false;
+        return reg_search(word, 0, root);
+    }
+    
+    bool reg_search(string& word, int idx, DictNode* node) {
+        // all is match, the last thing is whether current node
+        // is a word or not
+        if (idx >= word.size()) return node->isWord;
+        
+        if (word[idx] == '.') {
+            // all children match it, find it in next level
+            for(auto it = node->children.begin(); it != node->children.end(); it++) {
+                if (reg_search(word, idx+1, it->second))
+                    return true;
+            }
+            return false;
+        }
+        
+        // no children match it
+        if (node->children.find(word[idx]) == node->children.end())
+            return false;
+        // match, find in next level
+        return reg_search(word, idx+1, node->children[word[idx]]);
+    }
+};
+
+// Your WordDictionary object will be instantiated and called as such:
+// WordDictionary wordDictionary;
+// wordDictionary.addWord("word");
+// wordDictionary.search("pattern");
+
+
+
+
