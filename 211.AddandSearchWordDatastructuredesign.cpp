@@ -1,4 +1,10 @@
-// v2: 80ms,使用数组构建tree。
+
+// 公司：Facebook
+
+// 相关题目：Google，208. Implement Trie (Prefix Tree)
+
+
+// v2: 80ms,使用数组构建trie。
 class DictNode {
 public:
     bool isWord;
@@ -41,7 +47,7 @@ public:
         if (idx >= word.size()) return node->isWord;
         
         if (word[idx] == '.') {
-            // match each valid child
+            // all children match it, find it in next level
             for (int i = 0; i < 26; i++) {
                 if (node->children[i] && reg_search(word, idx+1, node->children[i]))
                     return true;
