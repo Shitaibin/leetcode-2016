@@ -13,6 +13,7 @@ class Solution {
     int cur_label;
     
     bool hasCycle(int n, vector<int>& visited, vector<int>& order, map<int, vector<int>>& graph) {
+        /* 0: not visited, 1: visted once, 2: checked, no cycle */
         if (visited[n] == 2) return false;
         if (visited[n] == 1) return true;
 
@@ -27,8 +28,7 @@ class Solution {
         visited[n] = 2;
 
         /* set topological order */
-        order[n] = cur_label;
-        cur_label--;
+        order[n] = cur_label--;
         return false;
     }
 
@@ -56,7 +56,7 @@ public:
         /* put the class id in to the right order */
         vector<int> result(numCourses);
         for (int i = 0; i < numCourses; i++) {
-            result[order[i]] = i;
+            result[order[i]] = i;  // i is course id
         }
         return result;
     }
