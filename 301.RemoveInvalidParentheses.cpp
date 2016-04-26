@@ -76,7 +76,14 @@ public:
 
 
 
-v2: 168ms，最朴素的BFS
+// v2: 168ms，最朴素的BFS，时间复杂度指数级。
+// 对于s，分别移除每一个字符，看得到的新字符是否是有效的组合，
+// 如果是，那么证明了，本层就是移除最少的结果。
+// 否则，根据新字符，再删除一个字符。对于每一层的结果，
+// 都放到队列里面，每次从队列中取一个元素去检验。
+// 那些新生成的字符串，就是下一层的状态。
+
+// 这个算法之所以慢，是因为，删除每一个元素去，生成下一个状态，太费时间了。
 class Solution {
     bool isValid(string s) {
         int count = 0;
@@ -126,5 +133,90 @@ public:
         }
         
         return result;
+    }
+};
+
+
+
+// v3: 4ms.
+// https://leetcode.com/discuss/68909/share-my-c-bfs-solution-4ms
+class Solution {
+public:
+vector<string> removeInvalidParentheses(string s) {
+    vector<string> ans;
+    if (s.size() == 0) {
+        ans.push_back("");
+        return ans;
+    }
+
+    deque<string> queue;
+    unordered_set<string> exists;
+    queue.push_back(s);
+    while (!queue.empty()) {
+        string target_str = queue.front();
+        queue.pop_front();
+        // cut from 172ms to 92ms
+        if (exists.find(target_str) != exists.end()) {
+            continue;
+        }
+        // cut from 16 to 4ms
+        exists.insert(target_str);
+        int invalid_point = findInvalidPoint(target_str);
+        if (invalid_point == -1) {
+            ans.push_back(target_str);
+            continue;
+        }
+        int start = 0;
+        int limit = target_str.size();
+        if (target_str[invalid_point] == LC) {
+            start = invalid_point;
+        } else {
+            limit = invalid_point + 1;
+        }
+        for (int i = start; i < limit; ++i) {
+            // only need to remove which the same as [invalid_point]
+            if (target_str[i] != target_str[invalid_point]) {
+                continue;
+            }
+            // skip duplicates
+            // cut from 92ms to 16ms, no need to search 
+            if (i != start && target_str[i-1] == target_str[i]) {
+                continue;
+            }
+            // generate next state
+            string tmp_s = target_str.substr(0, i);
+            if (i != target_str.size() - 1) {
+                tmp_s.append(target_str.substr(i+1, target_str.size()));
+            }
+            queue.push_back(tmp_s);
+        }
+    }
+
+    return ans;
+}
+private:
+    const char LC = '(';
+    const char RC = ')';
+    int findInvalidPoint(string& s) {
+        stack<pair<char, int> > st;
+        for (int i = 0; i < s.size(); ++i) {
+            if (s[i] == LC) {
+                st.push(pair<char, int>(s[i], i));
+            } else if (s[i] == RC) {
+                // too much right parenthese
+                if (st.size() == 0) {
+                    return i;
+                } 
+                st.pop();
+            }
+        }
+        // too much left parenthese or 
+        // it is valid
+        int top = -1;
+        if (!st.empty()) {
+            top = st.top().second;
+            st.pop();
+        }
+        return top;
     }
 };
