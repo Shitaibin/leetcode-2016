@@ -4,6 +4,7 @@
 
 
 // v2: 268ms. O(EV)
+// using less space than v1.
 class Solution {
     bool hasCycle(int n, vector<int>& visited, map<int, vector<int>>& graph) {
         if (visited[n] == 2) return false;
@@ -25,7 +26,7 @@ public:
         /* using map to stor the graph, it's easy to search the edge for each node */
         map<int, vector<int>> graph;
         for (int i = 0; i < prerequisites.size(); i++) {
-            graph[ prerequisites[i].first ].push_back( prerequisites[i].second );
+            graph[ prerequisites[i].second ].push_back( prerequisites[i].first );
         }
         /* visited[] is used to vistied state */
         /* 0: not visited, 1: visted once, 2: checked, no cycle */
