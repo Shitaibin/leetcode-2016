@@ -3,7 +3,7 @@
 // 使用DFS判断有向图有没有环
 
 
-// v2: 268ms. O(EV)
+// v2: 260ms. O(EV)
 // using less space than v1.
 class Solution {
     bool hasCycle(int n, vector<int>& visited, map<int, vector<int>>& graph) {
@@ -31,8 +31,8 @@ public:
         /* visited[] is used to vistied state */
         /* 0: not visited, 1: visted once, 2: checked, no cycle */
         vector<int> visited(numCourses, 0);
-        for (int i = 0; i < numCourses; i++) {
-            if (hasCycle(i, visited, graph))
+        for (int id = 0; id < numCourses; id++) {
+            if (hasCycle(id, visited, graph))
                 return false;
         }
         return true;
@@ -40,7 +40,7 @@ public:
 };
 
 
-// v1:268ms
+// v1:260ms
 class Solution {
     bool hasCycle(int n, vector<bool>& explored, vector<bool>& path, map<int, vector<int>>& graph) {
         /* already checked and no cycle from n */
