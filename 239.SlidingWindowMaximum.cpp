@@ -30,3 +30,23 @@ public:
         return result;
     }
 };
+
+// v2: 252ms. O(NlogN)
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        vector<int> result;
+        // 使用multiset存储当前窗口的k个数字
+        multiset<int> w;
+        
+        for (int i = 0; i < nums.size(); i++) {
+            // 删除移除窗口的数字
+            if (i >= k)
+                w.erase(w.find(nums[i-k]));
+            w.insert(nums[i]);
+            if (i >= (k - 1))
+                result.push_back(*(w.rbegin()));
+        }
+        return result;
+    }
+};
