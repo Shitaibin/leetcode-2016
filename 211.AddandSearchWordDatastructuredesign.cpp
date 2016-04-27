@@ -4,32 +4,32 @@
 // 相关题目：Google，208. Implement Trie (Prefix Tree)
 
 
-// v2: 80ms,使用数组构建trie。
+
+// v2: 76ms,使用数组构建trie。
 class DictNode {
 public:
     bool isWord;
     DictNode* children[26];
     
-    // 忘记构造函数造成运行时错误
     DictNode() : isWord(false), children({0}) {}
 };
 
 class WordDictionary {
 public:
-    DictNode* root;
-    
+    DictNode* trie;
+
     WordDictionary() {
-        root = new DictNode();
+        trie = new DictNode();
     }
     
     // Adds a word into the data structure.
     void addWord(string word) {
-        DictNode* node = root;
+        DictNode* node = trie;
         for (int i = 0; i < word.size(); i++) {
-            int child_idx = word[i] - 'a';
-            if (node->children[child_idx] == NULL)
-                node->children[child_idx] = new DictNode();
-            node = node->children[child_idx];
+            int idx = word[i] - 'a';
+            if (node->children[idx] == NULL) 
+                node->children[idx] = new DictNode();
+            node = node->children[idx];
         }
         node->isWord = true;
     }
@@ -37,34 +37,35 @@ public:
     // Returns if the word is in the data structure. A word could
     // contain the dot character '.' to represent any one letter.
     bool search(string word) {
-        if (word.empty()) return false;
-        return reg_search(word, 0, root);
+        return reg_search(word, 0, trie);
     }
     
+    // Cut from 156ms to 80ms, by using reference.
+    // If check node->children[i] is valid, can reduce
+    // a recursion level. It can cut from 80ms to 76ms.
+    // But in this way, it will be more clear.
     bool reg_search(string& word, int idx, DictNode* node) {
-        // all is match, the last thing is whether current node
-        // is a word or not
-        if (idx >= word.size()) return node->isWord;
-        
-        if (word[idx] == '.') {
-            // all children match it, find it in next level
-            for (int i = 0; i < 26; i++) {
-                if (node->children[i] && reg_search(word, idx+1, node->children[i]))
-                    return true;
-            }
-            return false;
+        // recursive ending
+        if (node == NULL) return false;
+        if (idx >= word.size()) {
+            return node->isWord;
         }
         
-        int child_idx = word[idx] - 'a';
-        return (node->children[child_idx] && 
-            reg_search(word, idx+1, node->children[child_idx]));
+        if (word[idx] == '.') {
+            // all match '.', search next level
+            for (int i = 0; i < 26; i++) {
+                if (reg_search(word, idx + 1, node->children[i]))
+                        return true;
+            }
+            // no children match the left sub string
+            return false;
+        }
+        // try to match `word[idx] - 'a'`.
+        return reg_search(word, idx + 1, node->children[word[idx] - 'a']);
     }
 };
 
-// Your WordDictionary object will be instantiated and called as such:
-// WordDictionary wordDictionary;
-// wordDictionary.addWord("word");
-// wordDictionary.search("pattern");
+
 
 
 // v1: 216ms，slow. using map build tree
