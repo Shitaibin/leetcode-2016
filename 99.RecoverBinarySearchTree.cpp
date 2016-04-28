@@ -37,3 +37,38 @@ public:
         }
     }
 };
+
+
+// v2: 迭代模式
+class Solution {
+public:
+    void recoverTree(TreeNode* root) {
+        TreeNode* pre, *n1, *n2;
+        pre = n1 = n2 = NULL;
+        
+        stack<TreeNode*> sta;
+        while (!sta.empty() || root) {
+            while (root) {
+                sta.push(root);
+                root = root->left;
+            }
+            
+            // visit current node
+            root = sta.top();
+            sta.pop();
+            if (pre && root->val <= pre->val) {
+                if (n1 == NULL)
+                    n1 = pre;
+                n2 = root;
+            }
+            pre = root;
+            
+            root = root->right;
+        }
+        
+        // found the nodes
+        if (n1 && n2) {
+            swap(n1->val, n2->val);
+        }
+    }
+};
